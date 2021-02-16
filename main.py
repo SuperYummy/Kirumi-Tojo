@@ -13,7 +13,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 
-with open("prefix.0", "r", encoding="utf-8") as f:
+with open("prefix", "r", encoding="utf-8") as f:
     prefix = f.read()
 
 client = commands.Bot(command_prefix =prefix)
@@ -78,7 +78,7 @@ async def unban(ctx, *, member):
             await ctx.send(f'Unbanned {user.mention}')
             return
 
-with open("token.0", "r", encoding="utf-8") as f:
+with open("token", "r", encoding="utf-8") as f:
     token = f.read()
 
 client.run(token)
