@@ -6,7 +6,6 @@ import random
 import os
 from itertools import cycle
 
-
 logger = logging.getLogger('discord')
 logger.setLevel(logging.DEBUG)
 handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
@@ -18,7 +17,7 @@ with open("prefix", "r", encoding="utf-8") as f:
     prefix = f.read()
 
 client = commands.Bot(command_prefix =prefix)
-client.remove_command('help')
+#client.remove_command('help')
 status = cycle([f"with {len(client.guilds)} servers", "Danganronpa V2: Bloodlust"])
 
 
@@ -32,18 +31,18 @@ async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
         await ctx.send("Inavlid command used.")
 
-@client.command(pass_context=True)
-async def help(ctx):
-    author = ctx.message.author
+#@client.command(pass_context=True)
+#async def help(ctx):
+#    author = ctx.message.author
 
-    embed = discord.Embed(
-        colour = discord.Colour.orange()
-    )
+#    embed = discord.Embed(
+#        colour = discord.Colour.orange()
+#    )
 
-    embed.set_author(name='Help')
-    embed.add_field(name='.ping', value='Returns Pong!', inline=False)
+ #   embed.set_author(name='Help')
+ #   embed.add_field(name='.ping', value='Returns Pong!', inline=False)
 
-    await ctx.send(author, embed=embed)
+#    await ctx.send(author, embed=embed)
 
 @client.event
 async def on_reaction_add(reaction, user):
@@ -91,15 +90,6 @@ async def _8ball(ctx, *, question):
     responses = ['Yes', 'No', 'I don\'t know']
     await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
 
-@client.command()
-@commands.has_permissions(manage_messages=True)
-async def clear(ctx, amount=5):
-    await ctx.channel.purge(limit=amount)
-
-@clear.error
-async def clear_error(ctx, error):
-    await ctx.send('Please specify an amount of messages to delete.')
-
 # Embed
 @client.command()
 async def displayembed(ctx):
@@ -108,17 +98,18 @@ async def displayembed(ctx):
         description = "This is a description.",
         colour = discord.Colour.blue()
     )
+    
+    file = discord.File("./attachment/sprites/kirumi-tojo/happy_1.png", filename="happy_1.png")
+   # embed.set_footer(text="This is a footer.")
+    embed.set_image(url="attachment://happy_1.png")
+   # embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/782990263391092776/eca2a90eac2952806367728a0fed41c1.png?size=128")
+   # embed.set_author(name="Author name", 
+   # icon_url="https://cdn.discordapp.com/avatars/782990263391092776/eca2a90eac2952806367728a0fed41c1.png?size=128")
+   # embed.add_field(name="Field Name", value="Field Value", inline=False)
+   # embed.add_field(name="Field Name", value="Field Value", inline=True)
+   # embed.add_field(name="Field Name", value="Field Value", inline=True)
 
-    embed.set_footer(text="This is a footer.")
-    embed.set_image(url="https://cdn.discordapp.com/avatars/782990263391092776/eca2a90eac2952806367728a0fed41c1.png?size=128")
-    embed.set_thumbnail(url="https://cdn.discordapp.com/avatars/782990263391092776/eca2a90eac2952806367728a0fed41c1.png?size=128")
-    embed.set_author(name="Author name", 
-    icon_url="https://cdn.discordapp.com/avatars/782990263391092776/eca2a90eac2952806367728a0fed41c1.png?size=128")
-    embed.add_field(name="Field Name", value="Field Value", inline=False)
-    embed.add_field(name="Field Name", value="Field Value", inline=True)
-    embed.add_field(name="Field Name", value="Field Value", inline=True)
-
-    await ctx.send(embed=embed)
+    await ctx.send(file=file, embed=embed)
 
 
 def is_it_me(ctx):

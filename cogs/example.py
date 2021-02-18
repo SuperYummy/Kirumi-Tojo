@@ -10,6 +10,7 @@ class Example(commands.Cog):
     async def on_ready(self):
         print('Bot is online.')
         
+    # Ping
     @commands.command()
     async def ping(self, ctx):
        await ctx.send(f'Pong!')
